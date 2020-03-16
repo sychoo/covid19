@@ -92,6 +92,18 @@ genHTML("US", "United States", $array_all);
 genHTML("OR", "Oregon", $array_all);
 genHTML("PA", "Pennsylvania", $array_all);
 
+// add multiple selection
+// http://jsfiddle.net/marcusasplund/jEADR/2/
+// https://select2.org/getting-started/basic-usage
+// https://stackoverflow.com/questions/14558578/how-to-use-select2-js
+//order: https://stackoverflow.com/questions/12395503/chosen-keep-multiple-selection-order
+//$("#e1").select2().on("change", function(e) {
+//console.log(e.val);
+//    results.push(e.val);
+// })
+// https://jsfiddle.net/86aqvno4/
+// https://github.com/select2/select2/issues/3106
+
 // function to generate HTML for different regions
 function genHTML($regionAbbreviation, $regionName, $array_all) {
   echo "<div class=\"rounded\">\n";
@@ -119,11 +131,6 @@ function genHTML($regionAbbreviation, $regionName, $array_all) {
   echo "<br>\n";
   echo "<br>\n";
 }
-
-// display an confirmation alert
-//function confirmationAlert($source_name, $source_url) {
-//  echo "<script type='text/javascript'>alert('Source of the data is extracted from $source_name');</script>";
-//}
 
 ?>
 
