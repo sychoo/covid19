@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
   <head>
     <title>Coronavirus Cases in the U.S., Oregon and Pennsylvania</title>
@@ -35,16 +36,16 @@
 
 <script type="text/javascript">
 function AlertIt(source_name) {
-var answer = confirm ("Please click on OK to continue.")
-if (answer)
-window.location="http://www.continue.com";
+  var answer = confirm ("Please click on OK to continue.")
+    if (answer)
+      window.location="http://www.continue.com";
 }
 </script>
 
 <script type="text/javascript">
 function confirmationAlert(source_name, source_url) {
- var answer = confirm ("Source of the data is extracted from " + source_name + "\n\nPlease click on OK to visit the source site.");
- if (answer)
+  var answer = confirm ("Source of the data is extracted from " + source_name + ".\n\nPlease click on OK to visit the source site.");
+  if (answer)
     window.location = source_url;
 }
 </script>
@@ -71,6 +72,10 @@ function confirmationAlert(source_name, source_url) {
 
 require "backend.php";
 
+// refresh every 30 seconds
+$url1=$_SERVER['REQUEST_URI'];
+header("Refresh: 30; URL=$url1");
+
 $a1 = parseCNN();
 //print_r ($a1);
 
@@ -80,13 +85,14 @@ $a2 = parseWorldometers();
 $a3 = parsePAgov();
 //print_r ($a3);
 
-$a4 = parseCDC();
+
+$a4 = parseORgov();
 //print_r($a4);
 
-$a5 = parseORgov();
+// $a5 = parseCDC();
 //print_r($a5);
 
-$array_all = Array($a1, $a2, $a3, $a4, $a5);
+$array_all = Array($a1, $a2, $a3, $a4);
 
 genHTML("US", "United States", $array_all);
 genHTML("OR", "Oregon", $array_all);

@@ -35,7 +35,8 @@ function parseORgov() {
   $OR_death = "0";
 
   // \r\n is for aspx (windows) newline
-  $regex = "/Positive<\/td>\r\n<td bgcolor=\"#cff9f3\" style=\"width:15%;height:31px;text-align:center\">(.*)<sup>\‡/";
+  $regex = "/<td bgcolor=\"#cff9f3\" style=\"width:15%;height:31px;text-align:center\">(.*)<\/td><\/tr>/";
+  //$regex = "/Positive<\/td>\r\n<td bgcolor=\"#cff9f3\" style=\"width:15%;height:31px;text-align:center\">(.*)<sup>\‡/";
   preg_match($regex, $data, $output);
   //print_r ($output);
   $OR_infected = $output[1];
@@ -66,7 +67,8 @@ function parseCDC() {
   $US_infected = "";
   $US_death = "";
 
-  $regex = "/<\/div><div class=\"card-body bg-white\"><ul>\n<li>Total cases:(.*)<\/li>\n<li>Total deaths:(.*)<\/li>/";
+  //$regex = "/<\/div><div class=\"card-body bg-white\"><ul>\n<li>Total cases:(.*)<\/li>\n<li>Total deaths:(.*)<\/li>/";
+  //$regex = "/Total cases: 4,226<\/li>.*<li>Total deaths: 75<\/li>/";
   preg_match($regex, $data, $output);
   $US_infected = $output[1];
   $US_death = $output[2];
@@ -95,7 +97,7 @@ function parsePAgov() {
   $PA_infected = "";
   $PA_death = "0";
 
-  $regex = "/in Pennsylvania. Total cases =(.*).<br><\/li><li>Counties impacted to date include/";
+  $regex = "/<li>To date, there are(.*)confirmed cases of COVID-19 in Pennsylvania.<\/li>/";
   preg_match($regex, $data, $output);
   $PA_infected = $output[1];
 
@@ -124,17 +126,17 @@ function parseWorldometers() {
   $US_death = "";
   $US_recovered = "";
 
-  $regex1 = "/<h1>Coronavirus Cases:<\/h1> <div class=\"maincounter-number\"> <span style=\"color:#aaa\">(.*)<\/span> <\/div><\/div><div id=\"maincounter-wrap\" style=\"margin-top:15px\"> <h1>Deaths:<\/h1>/"; 
+  $regex1 = "/<h1>Coronavirus Cases:<\/h1>.*?<div class=\"maincounter-number\">.*?<span style=\"color:#aaa\">(.*?)<\/span>.*?<\/div>.*?<\/div>.*?<div id=\"maincounter-wrap\" style=\"margin-top:15px\">.*?<h1>Deaths:<\/h1>/";
   preg_match($regex1, $data, $output1);
   //print_r($output1);
   $US_infected = $output1[1];
 
-  $regex2 = "/<h1>Deaths:<\/h1> <div class=\"maincounter-number\"> <span>(.*)<\/span> <\/div><\/div><div id=\"maincounter-wrap\" style=\"margin-top:15px;\"> <h1>Recovered:<\/h1>/";
+  $regex2 = "/<h1>Deaths:<\/h1> <div class=\"maincounter-number\"> <span>(.*?)<\/span> <\/div><\/div><div id=\"maincounter-wrap\" style=\"margin-top:15px;\"> <h1>Recovered:<\/h1>/";
   preg_match($regex2, $data, $output2);
   //print_r($output2);
   $US_death = $output2[1];
 
-  $regex3 = "/<h1>Recovered:<\/h1> <div class=\"maincounter-number\" style=\"color:#8ACA2B \"> <span>(.*)<\/span> <\/div><\/div><div style=\"margin-top:50px;\"><\/div><!-- START --><style>/";
+  $regex3 = "/<h1>Recovered:<\/h1> <div class=\"maincounter-number\" style=\"color:#8ACA2B \"> <span>(.*?)<\/span> <\/div><\/div><div style=\"margin-top:50px;\"><\/div><!-- START --><style>/";
   preg_match($regex3, $data, $output3);
 //print_r($output3);
   $US_recovered = $output3[1];
@@ -181,14 +183,15 @@ function parseCNN() {
   //print_r ($output_1);
 
   // parse the infected cases of the United States
-  $regex1 = "/the country has reported at least(.*)cases in.*at least.*cases.*at least.*cases/";
+  $regex1 = "/has more than(.*?)cases/";
   preg_match($regex1, $data, $output1);
   // $output1[1]: coronavirus infected in the United States
   // print $output1[1];
   $US_infected = $output1[1];
 
   // parse the death toll of the United States
-  $regex1_1 = "/<div class=\"zn-body__paragraph speakable\">At least(.*)people have died:/";
+  //$regex1_1 = "/<div class=\"zn-body__paragraph speakable\">At least(.*)people have died:/";
+  $regex1_1 = "/At least(.*)people.*have died/";
   preg_match($regex1_1, $data, $output1_1);
   // $output1_1[1]: coronavirus death cases in the United States
   //print_r ($output1_1);
@@ -223,7 +226,7 @@ function parseCNN() {
 
   // parse the data for Pennsylvania
   //<strong>Pennsylvania: </strong>45</div><div class="zn-body__paragraph"><strong>Puerto Rico:  $regex = "/<strong>Pennsylvania: <\/strong>(.*)<\/div><div class=\"zn-body__paragraph\"><strong>Puerto Rico:/";
-  $regex3 = "/<strong>Pennsylvania: <\/strong>(.*)<\/div><div class=\"zn-body__paragraph\"><strong>Puerto Rico:/";
+  $regex3 = "/<strong>Pennsylvania:.*<\/strong>(.*)<\/div><div class=\"zn-body__paragraph\"><strong>Puerto Rico:/";
   preg_match($regex3, $data, $output3);
   //print_r ($output3);
   // $output3[1]: coronavirus infected and death cases in Pennsylvania
